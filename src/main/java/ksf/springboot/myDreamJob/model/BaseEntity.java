@@ -19,7 +19,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Entity
-public class BaseEntity {
+public class BaseEntity { // I think this is necessary for possible future developments + DRY
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -35,4 +35,9 @@ public class BaseEntity {
     @UpdateTimestamp // I think this is important because of traceability
     private Timestamp lastModifiedDate;
 
+    public BaseEntity(UUID id, Timestamp createdDate, Timestamp lastModifiedDate) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
 }
