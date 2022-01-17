@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 // @RequiredArgsConstructor
 public class ClientAppService {
@@ -31,6 +34,10 @@ public class ClientAppService {
 
         }
 
+    }
+
+    public Optional<ClientApp> findById(UUID id){
+        return clientAppRepository.findById(id);
     }
 
 }
