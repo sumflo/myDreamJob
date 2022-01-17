@@ -1,13 +1,16 @@
 package ksf.springboot.myDreamJob.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,9 +21,25 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Entity
-public class JobAdvertisement extends BaseEntity{
+public class JobAdvertisement{
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type="org.hibernate.type.UUIDCharType")
+    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false )
+    private UUID id;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdDate;
+
+    @UpdateTimestamp
+    private Timestamp lastModifiedDate;
+
+    @JsonBackReference
     @ManyToOne
+    @JoinColumn(name="clientApp_id")
     private ClientApp clientApp;
 
     @Column(nullable = false, columnDefinition = "varchar(50)")
@@ -33,8 +52,7 @@ public class JobAdvertisement extends BaseEntity{
     @NotNull(message = "Place of work cannot be empty")
     private String placeOfWork;
 
-    @Column(columnDefinition = "varchar(255)")
-    @Max(value = 255, message = "Description should not be greater than 255")
+    @Column
     private String description;
 
     @Builder
@@ -45,13 +63,4 @@ public class JobAdvertisement extends BaseEntity{
         this.description = description;
     }
 
-    @Builder
-    public JobAdvertisement(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
-                            ClientApp clientApp, String positionName, String placeOfWork, String description) {
-        super(id, createdDate, lastModifiedDate);
-        this.clientApp = clientApp;
-        this.positionName = positionName;
-        this.placeOfWork = placeOfWork;
-        this.description = description;
-    }
 }

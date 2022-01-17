@@ -1,17 +1,21 @@
 package ksf.springboot.myDreamJob.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,10 +23,24 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ClientApp extends BaseEntity{
+public class ClientApp{
 
-    /*@Column(length = 36, columnDefinition = "varchar")
-    private UUID apiKey;*/
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type="org.hibernate.type.UUIDCharType")
+    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false ) //A UUID is made up of hex digits  (4 chars each) along with 4 “-” symbols, which make its length equal to 36 characters. (128-bit long value)
+    private UUID id;
+
+    @CreationTimestamp // I think this is important because of traceability
+    @Column(updatable = false)
+    private Timestamp createdDate;
+
+    @UpdateTimestamp // I think this is important because of traceability
+    private Timestamp lastModifiedDate;
+
+    @Column(length = 36, columnDefinition = "varchar")
+    private UUID apiKey;
 
     @Column(nullable = false, columnDefinition = "varchar(100)")
     @Size(min = 1, max = 100, message = "Client name must be between 1 and 100 characters") // 1-100 => not null
@@ -34,30 +52,12 @@ public class ClientApp extends BaseEntity{
     @NotNull(message = "Email cannot be empty")
     private String email;
 
-    @OneToMany(mappedBy = "clientApp")
+    @JsonManagedReference
+    @OneToMany(mappedBy="clientApp", cascade = CascadeType.ALL)
     private List<JobAdvertisement> jobAdvertisements; // I could have even used Set, but I prefer List
 
-/*    @Builder
-    public ClientApp(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
-                     UUID apiKey, String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
-        super(id, createdDate, lastModifiedDate);
+    public ClientApp(UUID apiKey, String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
         this.apiKey = apiKey;
-        this.clientName = clientName;
-        this.email = email;
-        this.jobAdvertisements = jobAdvertisements;
-    }*/
-
-    @Builder
-    public ClientApp(String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
-        this.clientName = clientName;
-        this.email = email;
-        this.jobAdvertisements = jobAdvertisements;
-    }
-
-    @Builder
-    public ClientApp(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
-                     String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
-        super(id, createdDate, lastModifiedDate);
         this.clientName = clientName;
         this.email = email;
         this.jobAdvertisements = jobAdvertisements;

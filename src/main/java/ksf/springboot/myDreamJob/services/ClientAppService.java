@@ -22,7 +22,7 @@ public class ClientAppService {
         this.clientAppRepository = clientAppRepository;
     }
 
-    public void register(ClientAppRequestDTO clientAppRequestDTO) throws Exception{
+    public UUID register(ClientAppRequestDTO clientAppRequestDTO) throws Exception{
 
         if(clientAppRepository.findByEmail(clientAppRequestDTO.getEmail()).isPresent()){
             throw new Exception();
@@ -30,8 +30,10 @@ public class ClientAppService {
             ModelMapper modelMapper = new ModelMapper();
             ClientApp clientApp = new ClientApp();
             modelMapper.map(clientAppRequestDTO, clientApp);
+            clientApp.setApiKey(UUID.randomUUID());
             clientAppRepository.save(clientApp);
 
+            return clientApp.getApiKey();
         }
 
     }

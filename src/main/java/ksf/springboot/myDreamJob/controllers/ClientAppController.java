@@ -23,9 +23,9 @@ public class ClientAppController {
         this.clientAppService = clientAppService;
     }
 
-    @PostMapping("/clients") //though I'd rather call it register
-    public ResponseEntity<Void> register(@RequestBody ClientAppRequestDTO clientAppRequestDTO) throws Exception {
-        clientAppService.register(clientAppRequestDTO);
-        return new ResponseEntity<>(HttpStatus.OK); // ToDo: responseban a szerver egy api kulcsot ad vissza UUID formátumban - but what does it mean???
+    @PostMapping("/clients")
+    public ResponseEntity<UUID> register(@RequestBody ClientAppRequestDTO clientAppRequestDTO) throws Exception {
+        UUID apiKey = clientAppService.register(clientAppRequestDTO);
+        return new ResponseEntity<>(apiKey, HttpStatus.OK);
     }
 }
