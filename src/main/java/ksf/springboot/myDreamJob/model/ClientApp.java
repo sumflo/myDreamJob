@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
@@ -23,10 +25,13 @@ public class ClientApp extends BaseEntity{
     private UUID apiKey;*/
 
     @Column(nullable = false, columnDefinition = "varchar(100)")
+    @Size(min = 1, max = 100, message = "Client name must be between 1 and 100 characters") // 1-100 => not null
+    @NotNull(message = "Client name cannot be empty") // just in case for safety
     private String clientName;
 
     @Column(nullable = false)
-    @Email(message = "Email should be valid") // I know it's not perfect, but much simpler than regex
+    @Email(message = "Incorrect email format") // I know it's not perfect, but much simpler than regex
+    @NotNull(message = "Email cannot be empty")
     private String email;
 
     @OneToMany(mappedBy = "clientApp")

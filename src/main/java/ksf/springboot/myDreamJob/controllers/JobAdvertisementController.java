@@ -35,6 +35,6 @@ public class JobAdvertisementController {
         return new ResponseEntity<>(HttpStatus.OK); //ToDo: térjen vissza egy URL-lel a responseban, hogy milyen oldalon érhető el a pozició
     }
 
-    //@GetMapping("/search/{keyWord}")
+    //@GetMapping("/search")
 
 }
