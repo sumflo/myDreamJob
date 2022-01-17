@@ -12,4 +12,6 @@ public interface ClientAppRepository extends JpaRepository<ClientApp, UUID> {
     List<ClientApp> findAll();
 
     Optional<ClientApp> findByEmail(String email);
+
+    Optional<ClientApp> findById(UUID id);
 }
