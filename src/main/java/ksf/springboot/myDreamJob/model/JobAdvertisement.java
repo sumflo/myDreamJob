@@ -30,6 +30,14 @@ public class JobAdvertisement extends BaseEntity{
     private String description;
 
     @Builder
+    public JobAdvertisement(ClientApp clientApp, String positionName, String placeOfWork, String description) {
+        this.clientApp = clientApp;
+        this.positionName = positionName;
+        this.placeOfWork = placeOfWork;
+        this.description = description;
+    }
+
+    @Builder
     public JobAdvertisement(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
                             ClientApp clientApp, String positionName, String placeOfWork, String description) {
         super(id, createdDate, lastModifiedDate);

@@ -42,6 +42,14 @@ public class ClientApp extends BaseEntity{
         this.jobAdvertisements = jobAdvertisements;
     }*/
 
+    @Builder
+    public ClientApp(String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
+        this.clientName = clientName;
+        this.email = email;
+        this.jobAdvertisements = jobAdvertisements;
+    }
+
+    @Builder
     public ClientApp(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
                      String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
         super(id, createdDate, lastModifiedDate);
