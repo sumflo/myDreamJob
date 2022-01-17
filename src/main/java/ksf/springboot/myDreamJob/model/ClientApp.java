@@ -19,8 +19,8 @@ import java.util.UUID;
 @Entity
 public class ClientApp extends BaseEntity{
 
-    @Column(length = 36, columnDefinition = "varchar")
-    private UUID apiKey;
+    /*@Column(length = 36, columnDefinition = "varchar")
+    private UUID apiKey;*/
 
     @Column(nullable = false, columnDefinition = "varchar(100)")
     private String clientName;
@@ -32,11 +32,19 @@ public class ClientApp extends BaseEntity{
     @OneToMany(mappedBy = "clientApp")
     private List<JobAdvertisement> jobAdvertisements; // I could have even used Set, but I prefer List
 
-    @Builder
+/*    @Builder
     public ClientApp(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
                      UUID apiKey, String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
         super(id, createdDate, lastModifiedDate);
         this.apiKey = apiKey;
+        this.clientName = clientName;
+        this.email = email;
+        this.jobAdvertisements = jobAdvertisements;
+    }*/
+
+    public ClientApp(UUID id, Timestamp createdDate, Timestamp lastModifiedDate,
+                     String clientName, String email, List<JobAdvertisement> jobAdvertisements) {
+        super(id, createdDate, lastModifiedDate);
         this.clientName = clientName;
         this.email = email;
         this.jobAdvertisements = jobAdvertisements;

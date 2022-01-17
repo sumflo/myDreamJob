@@ -8,4 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ClientAppRequestDTO {
+
+    private String clientName;
+    private String email;
+
 }
