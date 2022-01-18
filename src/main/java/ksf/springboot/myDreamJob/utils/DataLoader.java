@@ -26,10 +26,14 @@ public class DataLoader implements CommandLineRunner { // or ApplicationRunner
     public void run(String... args) throws Exception {
 
         List<JobAdvertisement> phoenixPositions = new ArrayList<>();
-        ClientApp phoenixComputerService = new ClientApp(UUID.randomUUID(), "Phoenix Computer Service", "phoenixComputerService@gmail.com", phoenixPositions);
-        JobAdvertisement computerRepairer = new JobAdvertisement(phoenixComputerService, "Computer mechanic", "Budapest", "We are looking for a mechanic who can lift any machine from its ashes.");
-        JobAdvertisement maid = new JobAdvertisement(phoenixComputerService, "Maid", "Budapest", "We are looking for a person who can clean the ashes without a trace if necessary.");
-        JobAdvertisement masseur = new JobAdvertisement(phoenixComputerService, "Masseur", "Budapest", "We are looking for a professional for the maintenance of our tired professionals hands.");
+        ClientApp phoenixComputerService = new ClientApp(UUID.randomUUID(), "Phoenix Computer Service",
+                "phoenixComputerService@gmail.com", phoenixPositions);
+        JobAdvertisement computerRepairer = new JobAdvertisement(phoenixComputerService, "Computer mechanic",
+                "Budapest", "We are looking for a mechanic who can lift any machine from its ashes.");
+        JobAdvertisement maid = new JobAdvertisement(phoenixComputerService, "Maid",
+                "Budapest", "We are looking for a person who can clean the ashes without a trace if necessary.");
+        JobAdvertisement masseur = new JobAdvertisement(phoenixComputerService, "Masseur",
+                "Budapest", "We are looking for a professional for the maintenance of our tired professionals hands.");
         phoenixComputerService.getJobAdvertisements().add(computerRepairer);
         phoenixComputerService.getJobAdvertisements().add(maid);
         phoenixComputerService.getJobAdvertisements().add(masseur);
@@ -40,15 +44,14 @@ public class DataLoader implements CommandLineRunner { // or ApplicationRunner
         jobAdvertisementRepository.save(masseur);
 
         List<JobAdvertisement> dreamPositions = new ArrayList<>();
-        ClientApp dreamDesignWorks = new ClientApp(UUID.randomUUID(), "Dream Design Works", "dreamDesignWorks@gmail.com", dreamPositions);
-        JobAdvertisement designer = new JobAdvertisement(phoenixComputerService, "Designer", "Vienna", "We are looking for the best designer ever.");
+        ClientApp dreamDesignWorks = new ClientApp(UUID.randomUUID(), "Dream Design Works",
+                "dreamDesignWorks@gmail.com", dreamPositions);
+        JobAdvertisement designer = new JobAdvertisement(phoenixComputerService, "Designer",
+                "Vienna", "We are looking for the best designer ever.");
         dreamDesignWorks.getJobAdvertisements().add(designer);
 
         clientAppRepository.save(dreamDesignWorks);
         jobAdvertisementRepository.save(designer);
-
-
-
 
     }
 
