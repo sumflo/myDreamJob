@@ -48,16 +48,12 @@ public class JobAdvertisementService {
         List<JobAdvertisement> allAdvertisement = jobAdvertisementRepository.findAll();
         List<UUID> jobAdvertisementUUIDsMatches = new ArrayList<>();
 
-        //ToDo: A szerver első lépésben ellenőrzi az api kulcs érvényességét. Nem érvényes api kulcs esetén hibaüzenettel tér vissza.
-
         for (int i = 0; i < allAdvertisement.size(); i++) {
             if(allAdvertisement.get(i).getPositionName().toLowerCase().contains(keyWord.toLowerCase()) &&
                     allAdvertisement.get(i).getPlaceOfWork().toLowerCase().contains(location.toLowerCase())){
                 jobAdvertisementUUIDsMatches.add(allAdvertisement.get(i).getId());
             }
         }
-
-        //ToDo: Ha a keresés sikerrel járt a kliens számára egy URL listával kell visszatérni a hírdetésekhez tartozó URL-el.
 
         return jobAdvertisementUUIDsMatches;
     }

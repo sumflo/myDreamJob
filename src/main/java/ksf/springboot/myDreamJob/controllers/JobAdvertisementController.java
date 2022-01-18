@@ -3,6 +3,7 @@ package ksf.springboot.myDreamJob.controllers;
 import ksf.springboot.myDreamJob.model.ClientApp;
 import ksf.springboot.myDreamJob.model.JobAdvertisement;
 import ksf.springboot.myDreamJob.model.dto.JobAdvertisementDTO;
+import ksf.springboot.myDreamJob.model.dto.SearchingRequestDTO;
 import ksf.springboot.myDreamJob.services.ClientAppService;
 import ksf.springboot.myDreamJob.services.JobAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,25 +61,25 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<String>> searchByPositionAndLocation(@RequestBody String position, String location){
+    public ResponseEntity<List<String>> searchByPositionAndLocation(@RequestBody SearchingRequestDTO searchingRequestDTO){
 
         String baseUrl = "http://localhost:8080/positions";
-        List<UUID> advertisementIdList = jobAdvertisementService.searchForAdvertisement(position, location);
+        List<UUID> advertisementIdList = jobAdvertisementService.searchForAdvertisement(searchingRequestDTO.getPosition(), searchingRequestDTO.getLocation());
         List<String> urlList = new ArrayList<>();
 
         for (int i = 0; i < advertisementIdList.size(); i++) {
 
-            if (clientAppService.findByApiKey(jobAdvertisementService.getAdvertisementById(
-                    advertisementIdList.get(i)).orElseThrow().getClientApp().getApiKey()).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét
+           if (clientAppService.findByApiKey(jobAdvertisementService.getAdvertisementById(
+                    advertisementIdList.get(i)).orElseThrow().getClientApp().getApiKey()).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét*/
 
                 String id = advertisementIdList.get(i).toString();
                 String url = baseUrl + "/" + id;
                 urlList.add(url);
 
-                return new ResponseEntity<>(urlList, HttpStatus.OK);
-            }
+               return new ResponseEntity<>(urlList, HttpStatus.OK);
+           }
         }
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN); //403 -->> Nem érvényes api kulcs esetén hibaüzenettel tér vissza.
+       return new ResponseEntity<>(HttpStatus.FORBIDDEN); //403 -->> Nem érvényes api kulcs esetén hibaüzenettel tér vissza.
     }
 
     @GetMapping("/advertisements")
