@@ -36,12 +36,12 @@ public class JobAdvertisementController {
     }
 
     @PostMapping("/positions")
-    public ResponseEntity<String> createAdvertisement(@RequestBody JobAdvertisementDTO jobAdvertisementDTO){
+    public ResponseEntity<String> createAdvertisement(@RequestBody JobAdvertisementDTO jobAdvertisementDTO, @RequestHeader("X-My-API-Key-Token") UUID apiKey){
 
         String baseUrl = "http://localhost:8080/positions";
         ClientApp currentClientApp = clientAppService.findById(jobAdvertisementDTO.getClientAppId()).orElseThrow();
 
-        if(clientAppService.findByApiKey(currentClientApp.getApiKey()).isPresent()){ // -->> A szerver első lépésben ellenőrzi az api kulcs érvényességét.
+        if(clientAppService.findByApiKey(apiKey).isPresent() && currentClientApp.getApiKey().equals(apiKey)){ // -->> A szerver első lépésben ellenőrzi az api kulcs érvényességét.
 
             JobAdvertisement currentJobAdvertisement =
             jobAdvertisementService.getAdvertisementById(
@@ -61,7 +61,7 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<String>> searchByPositionAndLocation(@RequestBody SearchingRequestDTO searchingRequestDTO){
+    public ResponseEntity<List<String>> searchByPositionAndLocation(@RequestBody SearchingRequestDTO searchingRequestDTO, @RequestHeader("X-My-API-Key-Token") UUID apiKey){
 
         String baseUrl = "http://localhost:8080/positions";
         List<UUID> advertisementIdList = jobAdvertisementService.searchForAdvertisement(searchingRequestDTO.getPosition(), searchingRequestDTO.getLocation());
@@ -69,8 +69,7 @@ public class JobAdvertisementController {
 
         for (int i = 0; i < advertisementIdList.size(); i++) {
 
-           if (clientAppService.findByApiKey(jobAdvertisementService.getAdvertisementById(
-                    advertisementIdList.get(i)).orElseThrow().getClientApp().getApiKey()).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét*/
+           if (clientAppService.findByApiKey(apiKey).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét*/
 
                 String id = advertisementIdList.get(i).toString();
                 String url = baseUrl + "/" + id;
