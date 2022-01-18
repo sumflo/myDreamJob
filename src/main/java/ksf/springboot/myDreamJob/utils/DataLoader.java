@@ -48,10 +48,14 @@ public class DataLoader implements CommandLineRunner { // or ApplicationRunner
                 "dreamDesignWorks@gmail.com", dreamPositions);
         JobAdvertisement designer = new JobAdvertisement(dreamDesignWorks, "Designer",
                 "Vienna", "We are looking for the best designer ever.");
+        JobAdvertisement designMaster = new JobAdvertisement(dreamDesignWorks, "Design Master",
+                "Vienna", "We are looking for the best designer ever.");
         dreamDesignWorks.getJobAdvertisements().add(designer);
+        dreamDesignWorks.getJobAdvertisements().add(designMaster);
 
         clientAppRepository.save(dreamDesignWorks);
         jobAdvertisementRepository.save(designer);
+        jobAdvertisementRepository.save(designMaster);
 
     }
 

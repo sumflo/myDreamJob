@@ -67,16 +67,15 @@ public class JobAdvertisementController {
         List<UUID> advertisementIdList = jobAdvertisementService.searchForAdvertisement(searchingRequestDTO.getPosition(), searchingRequestDTO.getLocation());
         List<String> urlList = new ArrayList<>();
 
-        for (int i = 0; i < advertisementIdList.size(); i++) {
+        if (clientAppService.findByApiKey(apiKey).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét*/
 
-           if (clientAppService.findByApiKey(apiKey).isPresent()) { // -->> ellenőrzi az api kulcs érvényességét*/
+            for (int i = 0; i < advertisementIdList.size(); i++) {
+                    String id = advertisementIdList.get(i).toString();
+                    String url = baseUrl + "/" + id;
+                    urlList.add(url);
+               }
 
-                String id = advertisementIdList.get(i).toString();
-                String url = baseUrl + "/" + id;
-                urlList.add(url);
-
-               return new ResponseEntity<>(urlList, HttpStatus.OK);
-           }
+            return new ResponseEntity<>(urlList, HttpStatus.OK);
         }
        return new ResponseEntity<>(HttpStatus.FORBIDDEN); //403 -->> Nem érvényes api kulcs esetén hibaüzenettel tér vissza.
     }
