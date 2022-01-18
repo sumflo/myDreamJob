@@ -16,7 +16,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*") // preparation for frontend access
 public class ClientAppController {
 
-    private ClientAppService clientAppService;
+    private final ClientAppService clientAppService;
 
     @Autowired
     public ClientAppController(ClientAppService clientAppService) {

@@ -42,4 +42,8 @@ public class ClientAppService {
         return clientAppRepository.findById(id);
     }
 
+    public Optional<ClientApp> findByApiKey(UUID apiKey){
+        return clientAppRepository.findByApiKey(apiKey);
+    }
+
 }
