@@ -46,7 +46,7 @@ public class DataLoader implements CommandLineRunner { // or ApplicationRunner
         List<JobAdvertisement> dreamPositions = new ArrayList<>();
         ClientApp dreamDesignWorks = new ClientApp(UUID.randomUUID(), "Dream Design Works",
                 "dreamDesignWorks@gmail.com", dreamPositions);
-        JobAdvertisement designer = new JobAdvertisement(phoenixComputerService, "Designer",
+        JobAdvertisement designer = new JobAdvertisement(dreamDesignWorks, "Designer",
                 "Vienna", "We are looking for the best designer ever.");
         dreamDesignWorks.getJobAdvertisements().add(designer);
 

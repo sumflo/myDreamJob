@@ -1,15 +1,15 @@
 package ksf.springboot.myDreamJob.controllers;
 
+import ksf.springboot.myDreamJob.model.ClientApp;
+import ksf.springboot.myDreamJob.model.JobAdvertisement;
 import ksf.springboot.myDreamJob.model.dto.ClientAppRequestDTO;
 import ksf.springboot.myDreamJob.services.ClientAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,4 +28,10 @@ public class ClientAppController {
         UUID apiKey = clientAppService.register(clientAppRequestDTO);
         return new ResponseEntity<>(apiKey, HttpStatus.OK);
     }
+
+    @GetMapping("/clientApps")
+    public List<ClientApp> getAllClientApp() {
+        return clientAppService.getAllClientApp();
+    }
+
 }

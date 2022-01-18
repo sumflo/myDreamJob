@@ -59,8 +59,6 @@ public class JobAdvertisementController {
 
     }
 
-
-
     @GetMapping("/search")
     public ResponseEntity<List<String>> searchByPositionAndLocation(@RequestBody String position, String location){
 
@@ -81,5 +79,10 @@ public class JobAdvertisementController {
             }
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN); //403 -->> Nem érvényes api kulcs esetén hibaüzenettel tér vissza.
+    }
+
+    @GetMapping("/advertisements")
+    public List<JobAdvertisement> getAllAdvertisement(){
+        return jobAdvertisementService.getAllAdvertisement();
     }
 }

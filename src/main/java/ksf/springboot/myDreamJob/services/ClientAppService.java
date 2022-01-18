@@ -1,6 +1,7 @@
 package ksf.springboot.myDreamJob.services;
 
 import ksf.springboot.myDreamJob.model.ClientApp;
+import ksf.springboot.myDreamJob.model.JobAdvertisement;
 import ksf.springboot.myDreamJob.model.dto.ClientAppRequestDTO;
 import ksf.springboot.myDreamJob.repositories.ClientAppRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +46,10 @@ public class ClientAppService {
 
     public Optional<ClientApp> findByApiKey(UUID apiKey){
         return clientAppRepository.findByApiKey(apiKey);
+    }
+
+    public List<ClientApp> getAllClientApp(){
+        return clientAppRepository.findAll();
     }
 
 }

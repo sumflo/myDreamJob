@@ -62,4 +62,8 @@ public class JobAdvertisementService {
         return jobAdvertisementUUIDsMatches;
     }
 
+    public List<JobAdvertisement> getAllAdvertisement(){
+        return jobAdvertisementRepository.findAll();
+    }
+
 }
